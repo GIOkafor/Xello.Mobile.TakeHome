@@ -22,6 +22,9 @@ Welcome, intrepid applicant! You have been chosen to embark on a journey through
 
 ## How to Run
 
+
+This project uses node `18.20.8`. We use [volta](https://volta.sh/) to manage our node versions automatically.
+
 1. `npm install`
 2. `npm start`
 3. Open [http://localhost:4200](http://localhost:4200) and prepare for adventure.

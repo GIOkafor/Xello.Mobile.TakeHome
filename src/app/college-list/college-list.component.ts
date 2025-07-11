@@ -51,7 +51,7 @@ export class CollegeListComponent {
   }
 
   trackById(index: number, item: College) {
-    return item.id; // Should just be item.id
+    return item.id;
   }
 
   onRowClick(college: College) {
@@ -68,5 +68,9 @@ export class CollegeListComponent {
 
   onPageSizeChange(newPageSize: number) {
     this.store.dispatch(CollegeListActions.setPageSize({ pageSize: newPageSize }));
+  }
+
+  onFilterChange(newFilter: string) {
+    this.store.dispatch(CollegeListActions.setFilter({ filter: newFilter }));
   }
 }

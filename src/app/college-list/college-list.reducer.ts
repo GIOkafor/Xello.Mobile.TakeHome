@@ -8,6 +8,7 @@ export interface CollegeListState {
   error: any;
   currentPage: number;
   pageSize: number;
+  filter: string;
 }
 
 export const initialState: CollegeListState = {
@@ -16,6 +17,7 @@ export const initialState: CollegeListState = {
   error: null,
   currentPage: 1,
   pageSize: 10,
+  filter: ''
 };
 
 export const collegeListReducer = createReducer(
@@ -24,5 +26,10 @@ export const collegeListReducer = createReducer(
   on(CollegeListActions.loadCollegesSuccess, (state, { colleges }) => ({ ...state, colleges, loading: false })),
   on(CollegeListActions.loadCollegesFailure, (state, { error }) => ({ ...state, loading: false, error })),
   on(CollegeListActions.setPage, (state, { page }) => ({ ...state, currentPage: page })),
-  on(CollegeListActions.setPageSize, (state, { pageSize }) => ({ ...state, pageSize }))
+  on(CollegeListActions.setPageSize, (state, { pageSize }) => ({ ...state, pageSize })),
+  on(CollegeListActions.setFilter, (state, { filter }) => ({
+    ...state,
+    filter,
+    currentPage: 1 // Optionally reset to first page on filter change
+  }))
 );

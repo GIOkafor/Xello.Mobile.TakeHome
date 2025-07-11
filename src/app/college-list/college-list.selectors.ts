@@ -28,8 +28,24 @@ export const selectPageSize = createSelector(
   (state) => state.pageSize
 );
 
-export const selectPaginatedColleges = createSelector(
+export const selectFilter = createSelector(
+  selectCollegeListState,
+  (state) => state.filter
+);
+
+export const selectFilteredColleges = createSelector(
   selectColleges,
+  selectFilter,
+  (colleges, filter) => {
+    if (!filter) return colleges;
+    return colleges.filter(college =>
+      college.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  }
+);
+
+export const selectPaginatedColleges = createSelector(
+  selectFilteredColleges,
   selectCurrentPage,
   selectPageSize,
   (colleges, currentPage, pageSize) => {

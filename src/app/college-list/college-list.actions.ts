@@ -6,4 +6,4 @@ export const loadCollegesSuccess = createAction('[College List] Load Colleges Su
 export const loadCollegesFailure = createAction('[College List] Load Colleges Failure', props<{ error: any }>());
 export const setPage = createAction('[College List] Set Page', props<{ page: number }>());
 export const setPageSize = createAction('[College List] Set Page Size', props<{ pageSize: number }>());
-
+export const setFilter = createAction('[College List] Set Filter', props<{ filter: string }>());

@@ -1,4 +1,9 @@
-<input type="text" placeholder="Filter by school name..." [(ngModel)]="filter" class="college-filter" />
+<input
+  type="text"
+  placeholder="Filter by school name..."
+  [ngModel]="filter" class="college-filter"
+  (ngModelChange) ="onFilterChange($event)"
+/>
 <button type="button" class="btn btn-primary ms-2" (click)="refreshCollegeList()" aria-label="Refresh college list">Refresh</button>
 <table>
   <thead>
@@ -26,7 +31,12 @@
     </tr>
   </tbody>
 </table>
-<div *ngIf="loading$ | async" class="loading">Loading colleges...</div>
+<div *ngIf="loading$ | async" class="loading">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading colleges...</span>
+  </div>
+</div>
+
 <div *ngIf="error$ | async as error" class="error">Error: {{ error }}</div>
 
 <div class="pagination mt-2" *ngIf="currentPage$ | async as currentPage">

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { Observable, interval, Subscription } from 'rxjs';
+import { Observable, interval, Subscription, combineLatest, map } from 'rxjs';
 import { College } from './college-list.model';
 import * as CollegeListActions from './college-list.actions';
 import * as CollegeListSelectors from './college-list.selectors';
@@ -19,6 +19,15 @@ export class CollegeListComponent {
   colleges$: Observable<College[]> = this.store.select(CollegeListSelectors.selectColleges);
   loading$: Observable<boolean> = this.store.select(CollegeListSelectors.selectCollegesLoading);
   error$: Observable<any> = this.store.select(CollegeListSelectors.selectCollegesError);
+  paginatedColleges$: Observable<College[]> = this.store.select(CollegeListSelectors.selectPaginatedColleges);
+  currentPage$: Observable<number> = this.store.select(CollegeListSelectors.selectCurrentPage);
+  pageSize$: Observable<number> = this.store.select(CollegeListSelectors.selectPageSize);
+  totalPages$ = combineLatest([
+    this.colleges$,
+    this.pageSize$
+  ]).pipe(
+    map(([colleges, pageSize]) => Math.ceil((colleges?.length || 0) / pageSize))
+  );
 
   filter = '';
 
@@ -51,5 +60,13 @@ export class CollegeListComponent {
 
   refreshCollegeList() {
     this.store.dispatch(CollegeListActions.loadColleges());
+  }
+
+  onPageChange(newPage: number) {
+    this.store.dispatch(CollegeListActions.setPage({ page: newPage }));
+  }
+
+  onPageSizeChange(newPageSize: number) {
+    this.store.dispatch(CollegeListActions.setPageSize({ pageSize: newPageSize }));
   }
 }

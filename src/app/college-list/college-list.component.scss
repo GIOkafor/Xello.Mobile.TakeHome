@@ -30,6 +30,15 @@ tr:hover {
   cursor: pointer;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.first-btn {
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
 @media (max-width: 500px) {
   table,
   thead,

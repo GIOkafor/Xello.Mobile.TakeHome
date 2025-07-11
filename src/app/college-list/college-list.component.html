@@ -14,7 +14,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let college of (colleges$ | async); trackBy: trackById" (click)="onRowClick(college)">
+    <tr *ngFor="let college of (paginatedColleges$ | async); trackBy: trackById" (click)="onRowClick(college)">
       <td data-label="Id">{{ college.id }}</td>
       <td data-label="Name">{{ college.name }}</td>
       <td data-label="City">{{ college.city }}</td>
@@ -28,3 +28,23 @@
 </table>
 <div *ngIf="loading$ | async" class="loading">Loading colleges...</div>
 <div *ngIf="error$ | async as error" class="error">Error: {{ error }}</div>
+
+<div class="pagination mt-2" *ngIf="currentPage$ | async as currentPage">
+  <ul class="pagination" *ngIf="totalPages$ | async as totalPages">
+    <button type="button" class="btn first-btn btn-outline-primary" (click)="onPageChange(1)" [disabled]="currentPage === 1">First</button>
+    <li class="page-item" *ngIf="currentPage !== 1" (click)="onPageChange(currentPage - 1)" [class.disabled]="currentPage === 1">
+      <a class="page-link cursor-pointer">Previous</a>
+    </li>
+    <li class="page-item" *ngIf="currentPage === 1" [class.disabled]="currentPage === 1">
+      <a class="page-link cursor-pointer">Previous</a>
+    </li><!-- This is to prevent the previous button from being clickable when on the first page -->
+
+    <li class="page-item">
+      <a class="page-link active">Page {{ currentPage }} of {{ totalPages }}</a>
+    </li>
+
+    <li class="page-item">
+      <a class="page-link cursor-pointer" (click)="onPageChange(currentPage + 1)" [class.disabled]="currentPage === totalPages">Next</a>
+    </li>
+  </ul>
+</div>

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, interval, Subscription } from 'rxjs';
 import { College } from './college-list.model';
 import * as CollegeListActions from './college-list.actions';
 import * as CollegeListSelectors from './college-list.selectors';
@@ -23,20 +23,33 @@ export class CollegeListComponent {
   filter = '';
 
   private _collegesSub = this.colleges$.subscribe();
+  private pollingSub: Subscription = new Subscription();
 
   constructor(private store: Store, private router: Router) {}
 
   ngOnInit() {
-    setInterval(() => {
-      this.store.dispatch(CollegeListActions.loadColleges());
-    }, 1000);
+    // Polling every 30 seconds experiment to see if it's better with the button
+    // this.pollingSub = interval(30000).subscribe(() => {
+    //   this.store.dispatch(CollegeListActions.loadColleges());
+    // });
+    this.store.dispatch(CollegeListActions.loadColleges());
+  }
+
+  ngOnDestroy() {
+    if (this.pollingSub) {
+      this.pollingSub.unsubscribe();
+    }
   }
 
   trackById(index: number, item: College) {
-    return item.id + Math.random(); // Should just be item.id
+    return item.id; // Should just be item.id
   }
 
   onRowClick(college: College) {
     this.router.navigate(['/college', college.id]);
+  }
+
+  refreshCollegeList() {
+    this.store.dispatch(CollegeListActions.loadColleges());
   }
 }

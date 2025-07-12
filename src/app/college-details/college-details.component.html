@@ -1,3 +1,8 @@
+<button class="btn btn-outline-primary" (click)="goBack()">
+  <i class="bi bi-arrow-left me-2"></i>
+  <span>Back To List</span>
+</button>
+
 <div *ngIf="college$ | async as college; else noCollege" class="college-details-card">
   <h2>{{ college.name }}</h2>
   <ul>

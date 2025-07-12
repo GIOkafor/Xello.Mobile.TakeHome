@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { College } from '../college-list/college-list.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, combineLatest, map } from 'rxjs';
 import * as CollegeListSelectors from '../college-list/college-list.selectors';
@@ -24,7 +24,15 @@ export class CollegeDetailsComponent implements OnInit {
     })
   );
 
-  constructor(private route: ActivatedRoute, private store: Store) {}
+  constructor(
+    private route: ActivatedRoute, 
+    private store: Store,
+    private router: Router
+  ) {}
 
   ngOnInit() {}
+
+  goBack() {
+    this.router.navigate(['/']);
+  }
 }

@@ -65,6 +65,8 @@ export class CollegeListComponent {
   }
 
   refreshCollegeList() {
+    this.filter = '';
+    this.store.dispatch(CollegeListActions.resetFilters());
     this.store.dispatch(CollegeListActions.loadColleges());
   }
 

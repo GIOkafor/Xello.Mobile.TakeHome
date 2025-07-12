@@ -40,5 +40,12 @@ export const collegeListReducer = createReducer(
     ...state,
     sortBy,
     sortDirection
-  }))
+  })),
+  on(CollegeListActions.resetFilters, (state) => ({
+    ...state,
+    filter: '',
+    currentPage: 1,
+    sortBy: 'id',
+    sortDirection: 'asc' as const
+  })),
 );

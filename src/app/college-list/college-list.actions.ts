@@ -8,3 +8,4 @@ export const setPage = createAction('[College List] Set Page', props<{ page: num
 export const setPageSize = createAction('[College List] Set Page Size', props<{ pageSize: number }>());
 export const setFilter = createAction('[College List] Set Filter', props<{ filter: string }>());
 export const setSort = createAction('[College List] Set Sort', props<{ sortBy: string|number; sortDirection: 'asc' | 'desc' }>());
+export const resetFilters = createAction('[College List] Reset Filters');

@@ -11,7 +11,7 @@ export const collegeListResolver: ResolveFn<boolean> = (route, state) => {
     // Dispatch loadColleges if not already loaded
     store.dispatch(CollegeListActions.loadColleges());
     // Wait until colleges are loaded (not loading)
-    return store.select(CollegeListSelectors.selectCollegesLoading).pipe(
+    return store.select(CollegeListSelectors.selectListLoading).pipe(
         filter(loading => loading === false),
         first(),
     );

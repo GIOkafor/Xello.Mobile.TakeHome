@@ -9,9 +9,14 @@ export const selectColleges = createSelector(
   (state) => state.colleges
 );
 
-export const selectCollegesLoading = createSelector(
+export const selectListLoading = createSelector(
   selectCollegeListState,
-  (state) => state.loading
+  (state) => state.loading.list
+);
+
+export const selectNavigating = createSelector(
+  selectCollegeListState,
+  (state) => state.loading.navigating
 );
 
 export const selectCollegesError = createSelector(

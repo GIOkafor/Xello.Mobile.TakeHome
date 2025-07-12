@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, combineLatest, map } from 'rxjs';
 import * as CollegeListSelectors from '../college-list/college-list.selectors';
+import * as CollegeListActions from '../college-list/college-list.actions';
 
 @Component({
   selector: 'app-college-details',
@@ -30,7 +31,9 @@ export class CollegeDetailsComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.store.dispatch(CollegeListActions.setNavigating({ navigating: false }));
+  }
 
   goBack() {
     this.router.navigate(['/']);

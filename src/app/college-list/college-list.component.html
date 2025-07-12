@@ -1,102 +1,160 @@
-<div class="searchInputs d-flex">
-  <input
-    class="form-control college-filter"
-    type="text"
-    placeholder="Filter by school name..."
-    [(ngModel)]="filter"
-    (ngModelChange) ="onFilterChange($event)"
-  />
+<div *ngIf="(listLoading$ | async) && !(navigating$ | async)" class="loading-skeleton">
+  <div class="placeholder-glow">
+    <span class="placeholder col-4 me-2 mh-100"></span>
+    <a class="btn btn-primary disabled placeholder col-2" aria-disabled="true"></a>
+  </div>
 
-  <button type="button" class="btn btn-primary ms-2" (click)="refreshCollegeList()" aria-label="Refresh college list">Refresh</button>
+  <!-- Table Header Skeleton -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th><div class="placeholder-glow"><span class="placeholder col-2"></span></div></th>
+        <th><div class="placeholder-glow"><span class="placeholder col-4"></span></div></th>
+        <th><div class="placeholder-glow"><span class="placeholder col-3"></span></div></th>
+        <th><div class="placeholder-glow"><span class="placeholder col-2"></span></div></th>
+        <th><div class="placeholder-glow"><span class="placeholder col-3"></span></div></th>
+        <th><div class="placeholder-glow"><span class="placeholder col-3"></span></div></th>
+        <th><div class="placeholder-glow"><span class="placeholder col-2"></span></div></th>
+        <th><div class="placeholder-glow"><span class="placeholder col-2"></span></div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Generate 10 skeleton rows -->
+      <tr *ngFor="let item of [1,2,3,4,5,6,7,8,9,10]">
+        <td><div class="placeholder-glow"><span class="placeholder col-1"></span></div></td>
+        <td><div class="placeholder-glow"><span class="placeholder col-6"></span></div></td>
+        <td><div class="placeholder-glow"><span class="placeholder col-4"></span></div></td>
+        <td><div class="placeholder-glow"><span class="placeholder col-2"></span></div></td>
+        <td><div class="placeholder-glow"><span class="placeholder col-2"></span></div></td>
+        <td><div class="placeholder-glow"><span class="placeholder col-3"></span></div></td>
+        <td><div class="placeholder-glow"><span class="placeholder col-1"></span></div></td>
+        <td><div class="placeholder-glow"><span class="placeholder col-2"></span></div></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
-<table>
-  <thead>
-    <tr>
-      <th (click)="onSort('id')" class="sortable-header">
-        Id
-        <span class="sort-indicator">{{ getSortIndicator('id') | async }}</span>
-      </th>
-      <th (click)="onSort('name')" class="sortable-header">
-        Name
-        <span class="sort-indicator">{{ getSortIndicator('name') | async }}</span>
-      </th>
-      <th (click)="onSort('city')" class="sortable-header">
-        City
-        <span class="sort-indicator">{{ getSortIndicator('city') | async }}</span>
-      </th>
-      <th (click)="onSort('state')" class="sortable-header">
-        State
-        <span class="sort-indicator">{{ getSortIndicator('state') | async}}</span>
-      </th>
-      <th (click)="onSort('numStudents')" class="sortable-header">
-        Num Students
-        <span class="sort-indicator">{{ getSortIndicator('numStudents') | async}}</span>
-      </th>
-      <th (click)="onSort('tuitionAndFees')" class="sortable-header">
-        Tuition & Fees
-        <span class="sort-indicator">{{ getSortIndicator('tuitionAndFees') | async}}</span>
-      </th>
-      <th (click)="onSort('numMajors')" class="sortable-header">
-        Num Majors
-        <span class="sort-indicator">{{ getSortIndicator('numMajors') | async}}</span>
-      </th>
-      <th (click)="onSort('hasSports')" class="sortable-header">
-        Has Sports
-        <span class="sort-indicator">{{ getSortIndicator('hasSports') | async}}</span>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let college of (paginatedColleges$ | async); trackBy: trackById" (click)="onRowClick(college)">
-      <td data-label="Id">{{ college.id }}</td>
-      <td data-label="Name">{{ college.name }}</td>
-      <td data-label="City">{{ college.city }}</td>
-      <td data-label="State">{{ college.state }}</td>
-      <td data-label="Num Students">{{ college.numStudents }}</td>
-      <td data-label="Tuition & Fees">{{ college.tuitionAndFees | currency:'USD' }}</td>
-      <td data-label="Num Majors">{{ college.numMajors }}</td>
-      <td data-label="Has Sports">{{ college.hasSports ? 'Yes' : 'No' }}</td>
-    </tr>
-  </tbody>
-</table>
-<div *ngIf="loading$ | async" class="loading">
-  <div class="spinner-border text-primary" role="status">
-    <span class="visually-hidden">Loading colleges...</span>
+<div *ngIf="!(listLoading$ | async) && !(navigating$ | async)">
+  <div class="searchInputs d-flex">
+    <input
+      class="form-control college-filter"
+      type="text"
+      placeholder="Filter by school name..."
+      [(ngModel)]="filter"
+      (ngModelChange) ="onFilterChange($event)"
+    />
+  
+    <button type="button" class="btn btn-primary ms-2" (click)="refreshCollegeList()" aria-label="Refresh college list">Refresh</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th (click)="onSort('id')" class="sortable-header">
+          Id
+          <span class="sort-indicator">{{ getSortIndicator('id') | async }}</span>
+        </th>
+        <th (click)="onSort('name')" class="sortable-header">
+          Name
+          <span class="sort-indicator">{{ getSortIndicator('name') | async }}</span>
+        </th>
+        <th (click)="onSort('city')" class="sortable-header">
+          City
+          <span class="sort-indicator">{{ getSortIndicator('city') | async }}</span>
+        </th>
+        <th (click)="onSort('state')" class="sortable-header">
+          State
+          <span class="sort-indicator">{{ getSortIndicator('state') | async}}</span>
+        </th>
+        <th (click)="onSort('numStudents')" class="sortable-header">
+          Num Students
+          <span class="sort-indicator">{{ getSortIndicator('numStudents') | async}}</span>
+        </th>
+        <th (click)="onSort('tuitionAndFees')" class="sortable-header">
+          Tuition & Fees
+          <span class="sort-indicator">{{ getSortIndicator('tuitionAndFees') | async}}</span>
+        </th>
+        <th (click)="onSort('numMajors')" class="sortable-header">
+          Num Majors
+          <span class="sort-indicator">{{ getSortIndicator('numMajors') | async}}</span>
+        </th>
+        <th (click)="onSort('hasSports')" class="sortable-header">
+          Has Sports
+          <span class="sort-indicator">{{ getSortIndicator('hasSports') | async}}</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let college of (paginatedColleges$ | async); trackBy: trackById" (click)="onRowClick(college)">
+        <td data-label="Id">{{ college.id }}</td>
+        <td data-label="Name">{{ college.name }}</td>
+        <td data-label="City">{{ college.city }}</td>
+        <td data-label="State">{{ college.state }}</td>
+        <td data-label="Num Students">{{ college.numStudents }}</td>
+        <td data-label="Tuition & Fees">{{ college.tuitionAndFees | currency:'USD' }}</td>
+        <td data-label="Num Majors">{{ college.numMajors }}</td>
+        <td data-label="Has Sports">{{ college.hasSports ? 'Yes' : 'No' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination mt-2" *ngIf="currentPage$ | async as currentPage">
+    <ul class="pagination" *ngIf="totalPages$ | async as totalPages">
+      
+      <li class="page-item" (click)="currentPage !== 1 && onPageChange(1)" [class.disabled]="currentPage === 1">
+        <a class="page-link cursor-pointer">
+          <i class="bi bi-chevron-bar-left"></i>
+        </a>
+      </li>
+  
+      <li class="page-item" (click)="currentPage !== 1 && onPageChange(currentPage - 1)" [class.disabled]="currentPage === 1">
+        <a class="page-link cursor-pointer">
+          <i class="bi bi-chevron-left"></i>
+        </a>
+      </li>
+  
+      <li class="page-item">
+        <a class="page-link">Page {{ currentPage }} of {{ totalPages }}</a>
+      </li>
+  
+      <li class="page-item">
+        <a class="page-link cursor-pointer" (click)="currentPage !== totalPages && onPageChange(currentPage + 1)" [class.disabled]="currentPage === totalPages">
+          <i class="bi bi-chevron-right"></i>
+        </a>
+      </li>
+  
+      <li class="page-item">
+        <a class="page-link cursor-pointer" (click)="currentPage !== totalPages && onPageChange(totalPages)" [class.disabled]="currentPage === totalPages">
+          <i class="bi bi-chevron-bar-right"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- College Details Skeleton (shows while navigating) -->
+<div *ngIf="navigating$ | async" class="container college-details-skeleton mt-4">
+  <!-- Back Button Skeleton -->
+  <div class="mb-4">
+    <span class="placeholder col-3 btn btn-primary disabled"></span>
+  </div>
+
+  <!-- Card Skeleton -->
+  <div class="row g-4">
+    <div class="col-md-12">
+      <div class="card p-3">
+        <div class="placeholder-glow mb-2">
+          <span class="placeholder col-5"></span>
+        </div>
+        <div class="placeholder-glow mb-2">
+          <span class="placeholder col-8"></span>
+        </div>
+        <div class="placeholder-glow">
+          <span class="placeholder col-6"></span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 <div *ngIf="error$ | async as error" class="error">Error: {{ error }}</div>
-
-<div class="pagination mt-2" *ngIf="currentPage$ | async as currentPage">
-  <ul class="pagination" *ngIf="totalPages$ | async as totalPages">
-    
-    <li class="page-item" (click)="currentPage !== 1 && onPageChange(1)" [class.disabled]="currentPage === 1">
-      <a class="page-link cursor-pointer">
-        <i class="bi bi-chevron-bar-left"></i>
-      </a>
-    </li>
-
-    <li class="page-item" (click)="currentPage !== 1 && onPageChange(currentPage - 1)" [class.disabled]="currentPage === 1">
-      <a class="page-link cursor-pointer">
-        <i class="bi bi-chevron-left"></i>
-      </a>
-    </li>
-
-    <li class="page-item">
-      <a class="page-link active">Page {{ currentPage }} of {{ totalPages }}</a>
-    </li>
-
-    <li class="page-item">
-      <a class="page-link cursor-pointer" (click)="currentPage !== totalPages && onPageChange(currentPage + 1)" [class.disabled]="currentPage === totalPages">
-        <i class="bi bi-chevron-right"></i>
-      </a>
-    </li>
-
-    <li class="page-item">
-      <a class="page-link cursor-pointer" (click)="currentPage !== totalPages && onPageChange(totalPages)" [class.disabled]="currentPage === totalPages">
-        <i class="bi bi-chevron-bar-right"></i>
-      </a>
-    </li>
-  </ul>
-</div>

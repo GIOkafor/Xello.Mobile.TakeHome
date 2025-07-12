@@ -18,7 +18,8 @@ import { FormsModule } from '@angular/forms';
 })
 export class CollegeListComponent {
   colleges$: Observable<College[]> = this.store.select(CollegeListSelectors.selectColleges);
-  loading$: Observable<boolean> = this.store.select(CollegeListSelectors.selectCollegesLoading);
+  listLoading$: Observable<boolean> = this.store.select(CollegeListSelectors.selectListLoading);
+  navigating$: Observable<boolean> = this.store.select(CollegeListSelectors.selectNavigating);
   error$: Observable<any> = this.store.select(CollegeListSelectors.selectCollegesError);
   paginatedColleges$: Observable<College[]> = this.store.select(CollegeListSelectors.selectPaginatedColleges);
   currentPage$: Observable<number> = this.store.select(CollegeListSelectors.selectCurrentPage);
@@ -61,6 +62,7 @@ export class CollegeListComponent {
   }
 
   onRowClick(college: College) {
+    this.store.dispatch(CollegeListActions.setNavigating({ navigating: true }));
     this.router.navigate(['/college', college.id]);
   }
 

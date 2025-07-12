@@ -1,21 +1,26 @@
-<input
-  type="text"
-  placeholder="Filter by school name..."
-  [ngModel]="filter" class="college-filter"
-  (ngModelChange) ="onFilterChange($event)"
-/>
-<button type="button" class="btn btn-primary ms-2" (click)="refreshCollegeList()" aria-label="Refresh college list">Refresh</button>
+<div class="searchInputs d-flex">
+  <input
+    class="form-control college-filter"
+    type="text"
+    placeholder="Filter by school name..."
+    [ngModel]="filter"
+    (ngModelChange) ="onFilterChange($event)"
+  />
+
+  <button type="button" class="btn btn-primary ms-2" (click)="refreshCollegeList()" aria-label="Refresh college list">Refresh</button>
+</div>
+
 <table>
   <thead>
     <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>City</th>
-      <th>State</th>
-      <th>Num Students</th>
-      <th>Tuition & Fees</th>
-      <th>Num Majors</th>
-      <th>Has Sports</th>
+      <th (click)="onSort('id')">Id</th>
+      <th (click)="onSort('name')">Name</th>
+      <th (click)="onSort('city')">City</th>
+      <th (click)="onSort('state')">State</th>
+      <th (click)="onSort('numStudents')">Num Students</th>
+      <th (click)="onSort('tuitionAndFees')">Tuition & Fees</th>
+      <th (click)="onSort('numMajors')">Num Majors</th>
+      <th (click)="onSort('hasSports')">Has Sports</th>
     </tr>
   </thead>
   <tbody>

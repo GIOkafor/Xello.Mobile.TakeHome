@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { Observable, interval, Subscription, combineLatest, map } from 'rxjs';
+import { Observable, Subscription, Subject, combineLatest, map, first } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { College } from './college-list.model';
 import * as CollegeListActions from './college-list.actions';
 import * as CollegeListSelectors from './college-list.selectors';
@@ -31,8 +32,8 @@ export class CollegeListComponent {
 
   filter = '';
 
-  private _collegesSub = this.colleges$.subscribe();
   private pollingSub: Subscription = new Subscription();
+  private destroy$ = new Subject<void>();
 
   constructor(private store: Store, private router: Router) {}
 
@@ -48,6 +49,8 @@ export class CollegeListComponent {
     if (this.pollingSub) {
       this.pollingSub.unsubscribe();
     }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   trackById(index: number, item: College) {
@@ -72,5 +75,29 @@ export class CollegeListComponent {
 
   onFilterChange(newFilter: string) {
     this.store.dispatch(CollegeListActions.setFilter({ filter: newFilter }));
+  }
+
+  private getSortConfig(sortBy: string) {
+    return combineLatest([
+      this.store.select(CollegeListSelectors.selectSortBy),
+      this.store.select(CollegeListSelectors.selectSortDirection)
+    ]).pipe(
+      first(),
+      map(([currentSortBy, currentDirection]) => {
+        const newDirection = (currentSortBy === sortBy && currentDirection === 'asc') 
+          ? 'desc' as const 
+          : 'asc' as const;
+        
+        return { sortBy, sortDirection: newDirection };
+      })
+    );
+  }
+
+  onSort(sortBy: string) {
+    this.getSortConfig(sortBy).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(sortConfig => {
+      this.store.dispatch(CollegeListActions.setSort(sortConfig));
+    });
   }
 }

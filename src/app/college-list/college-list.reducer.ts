@@ -9,6 +9,8 @@ export interface CollegeListState {
   currentPage: number;
   pageSize: number;
   filter: string;
+  sortBy: string | number;
+  sortDirection: 'asc' | 'desc';
 }
 
 export const initialState: CollegeListState = {
@@ -17,7 +19,9 @@ export const initialState: CollegeListState = {
   error: null,
   currentPage: 1,
   pageSize: 10,
-  filter: ''
+  filter: '',
+  sortBy: 'id',
+  sortDirection: 'asc',
 };
 
 export const collegeListReducer = createReducer(
@@ -31,5 +35,10 @@ export const collegeListReducer = createReducer(
     ...state,
     filter,
     currentPage: 1 // Optionally reset to first page on filter change
+  })),
+  on(CollegeListActions.setSort, (state, { sortBy, sortDirection }) => ({
+    ...state,
+    sortBy,
+    sortDirection
   }))
 );

@@ -7,3 +7,4 @@ export const loadCollegesFailure = createAction('[College List] Load Colleges Fa
 export const setPage = createAction('[College List] Set Page', props<{ page: number }>());
 export const setPageSize = createAction('[College List] Set Page Size', props<{ pageSize: number }>());
 export const setFilter = createAction('[College List] Set Filter', props<{ filter: string }>());
+export const setSort = createAction('[College List] Set Sort', props<{ sortBy: string|number; sortDirection: 'asc' | 'desc' }>());

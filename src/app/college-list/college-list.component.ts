@@ -24,7 +24,7 @@ export class CollegeListComponent {
   currentPage$: Observable<number> = this.store.select(CollegeListSelectors.selectCurrentPage);
   pageSize$: Observable<number> = this.store.select(CollegeListSelectors.selectPageSize);
   totalPages$ = combineLatest([
-    this.colleges$,
+    this.store.select(CollegeListSelectors.selectFilteredSortedColleges),
     this.pageSize$
   ]).pipe(
     map(([colleges, pageSize]) => Math.ceil((colleges?.length || 0) / pageSize))

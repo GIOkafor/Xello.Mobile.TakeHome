@@ -30,6 +30,9 @@ export class CollegeListComponent {
     map(([colleges, pageSize]) => Math.ceil((colleges?.length || 0) / pageSize))
   );
 
+  sortBy$: Observable<string|number> = this.store.select(CollegeListSelectors.selectSortBy);
+  sortDirection$: Observable<'asc' | 'desc'> = this.store.select(CollegeListSelectors.selectSortDirection);
+
   filter = '';
 
   private pollingSub: Subscription = new Subscription();
@@ -99,5 +102,16 @@ export class CollegeListComponent {
     ).subscribe(sortConfig => {
       this.store.dispatch(CollegeListActions.setSort(sortConfig));
     });
+  }
+
+  getSortIndicator(column: string): Observable<string> {
+    return combineLatest([this.sortBy$, this.sortDirection$]).pipe(
+      map(([sortBy, direction]) => {
+        if (sortBy === column) {
+          return direction === 'asc' ? '↑' : '↓';
+        }
+        return '';
+      })
+    );
   }
 }

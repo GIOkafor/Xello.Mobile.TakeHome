@@ -13,14 +13,38 @@
 <table>
   <thead>
     <tr>
-      <th (click)="onSort('id')">Id</th>
-      <th (click)="onSort('name')">Name</th>
-      <th (click)="onSort('city')">City</th>
-      <th (click)="onSort('state')">State</th>
-      <th (click)="onSort('numStudents')">Num Students</th>
-      <th (click)="onSort('tuitionAndFees')">Tuition & Fees</th>
-      <th (click)="onSort('numMajors')">Num Majors</th>
-      <th (click)="onSort('hasSports')">Has Sports</th>
+      <th (click)="onSort('id')" class="sortable-header">
+        Id
+        <span class="sort-indicator">{{ getSortIndicator('id') | async }}</span>
+      </th>
+      <th (click)="onSort('name')" class="sortable-header">
+        Name
+        <span class="sort-indicator">{{ getSortIndicator('name') | async }}</span>
+      </th>
+      <th (click)="onSort('city')" class="sortable-header">
+        City
+        <span class="sort-indicator">{{ getSortIndicator('city') | async }}</span>
+      </th>
+      <th (click)="onSort('state')" class="sortable-header">
+        State
+        <span class="sort-indicator">{{ getSortIndicator('state') | async}}</span>
+      </th>
+      <th (click)="onSort('numStudents')" class="sortable-header">
+        Num Students
+        <span class="sort-indicator">{{ getSortIndicator('numStudents') | async}}</span>
+      </th>
+      <th (click)="onSort('tuitionAndFees')" class="sortable-header">
+        Tuition & Fees
+        <span class="sort-indicator">{{ getSortIndicator('tuitionAndFees') | async}}</span>
+      </th>
+      <th (click)="onSort('numMajors')" class="sortable-header">
+        Num Majors
+        <span class="sort-indicator">{{ getSortIndicator('numMajors') | async}}</span>
+      </th>
+      <th (click)="onSort('hasSports')" class="sortable-header">
+        Has Sports
+        <span class="sort-indicator">{{ getSortIndicator('hasSports') | async}}</span>
+      </th>
     </tr>
   </thead>
   <tbody>

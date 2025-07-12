@@ -7,6 +7,21 @@ table {
   border-collapse: collapse;
 }
 
+.sortable-header {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  
+  &:hover {
+    background-color: #f8f9fa;
+  }
+}
+
+.sort-indicator {
+  margin-left: 5px;
+  font-weight: bold;
+}
+
 thead th {
   position: sticky;
   top: 4.5rem;

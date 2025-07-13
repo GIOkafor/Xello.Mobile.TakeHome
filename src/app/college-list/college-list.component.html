@@ -4,7 +4,7 @@
     <a class="btn btn-primary disabled placeholder col-2" aria-disabled="true"></a>
   </div>
 
-  <!-- Table Header Skeleton -->
+  <!-- Table Skeleton -->
   <table class="table">
     <thead>
       <tr>
@@ -35,16 +35,16 @@
 </div>
 
 <div *ngIf="!(listLoading$ | async) && !(navigating$ | async)">
-  <div class="searchInputs d-flex">
+  <div class="searchInputs d-flex flex-wrap">
     <input
-      class="form-control college-filter"
+      class="form-control college-filter mb-2 mb-sm-0 me-sm-2"
       type="text"
       placeholder="Filter by school name..."
       [(ngModel)]="filter"
       (ngModelChange) ="onFilterChange($event)"
     />
   
-    <button type="button" class="btn btn-primary ms-2" (click)="refreshCollegeList()" aria-label="Refresh college list">Refresh</button>
+    <button type="button" class="btn btn-primary" (click)="refreshCollegeList()" aria-label="Refresh college list">Refresh</button>
   </div>
 
   <table>

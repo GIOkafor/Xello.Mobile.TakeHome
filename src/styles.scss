@@ -1,4 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/variables-dark';
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/utilities';
+
+@import 'bootstrap/scss/root';
+@import 'bootstrap/scss/reboot';
+@import 'bootstrap/scss/type';
+@import 'bootstrap/scss/containers';
+@import 'bootstrap/scss/grid';
+@import 'bootstrap/scss/buttons';
+@import 'bootstrap/scss/card';
+@import 'bootstrap/scss/forms';
+@import 'bootstrap/scss/pagination';
+@import 'bootstrap/scss/tables';
+@import 'bootstrap/scss/transitions';
+@import 'bootstrap/scss/placeholders';
+
+// Helpers
+@import 'bootstrap/scss/helpers';
+
+// Utilities
+@import 'bootstrap/scss/utilities/api';
+
+// Bootstrap Icons
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
 :host {
   --bright-blue: oklch(51.01% 0.274 263.83);
   --electric-violet: oklch(53.18% 0.28 296.97);

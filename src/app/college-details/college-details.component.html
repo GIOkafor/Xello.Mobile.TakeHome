@@ -1,4 +1,4 @@
-<button class="btn btn-outline-primary" (click)="goBack()">
+<button class="btn btn-outline-primary" (click)="goBack()" data-cy="backBtn">
   <i class="bi bi-arrow-left me-2"></i>
   <span>Back To List</span>
 </button>
@@ -6,13 +6,13 @@
 <div *ngIf="college$ | async as college; else noCollege" class="college-details-card">
   <h2>{{ college.name }}</h2>
   <ul>
-    <li><strong>Id:</strong> {{ college.id }}</li>
-    <li><strong>City:</strong> {{ college.city }}</li>
-    <li><strong>State:</strong> {{ college.state }}</li>
-    <li><strong>Number of Students:</strong> {{ college.numStudents }}</li>
-    <li><strong>Tuition & Fees:</strong> {{ college.tuitionAndFees | currency:'USD' }}</li>
-    <li><strong>Number of Majors:</strong> {{ college.numMajors }}</li>
-    <li><strong>Has Sports:</strong> {{ college.hasSports ? 'Yes' : 'No' }}</li>
+    <li data-test="collegeId"><strong>Id:</strong> {{ college.id }}</li>
+    <li data-test="city"><strong>City:</strong> {{ college.city }}</li>
+    <li data-test="state"><strong>State:</strong> {{ college.state }}</li>
+    <li data-test="numStudents"><strong>Number of Students:</strong> {{ college.numStudents }}</li>
+    <li data-test="tuitionAndFees"><strong>Tuition & Fees:</strong> {{ college.tuitionAndFees | currency:'USD' }}</li>
+    <li data-test="numMajors"><strong>Number of Majors:</strong> {{ college.numMajors }}</li>
+    <li data-test="hasSports"><strong>Has Sports:</strong> {{ college.hasSports ? 'Yes' : 'No' }}</li>
   </ul>
 </div>
 <ng-template #noCollege>

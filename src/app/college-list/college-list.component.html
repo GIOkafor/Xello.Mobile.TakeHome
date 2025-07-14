@@ -18,59 +18,67 @@
       (ngModelChange) ="onFilterChange($event)"
     />
   
-    <button type="button" class="btn btn-primary" (click)="refreshCollegeList()" aria-label="Refresh college list">Refresh</button>
+    <button type="button" class="btn btn-primary" (click)="refreshCollegeList()" aria-label="Refresh college list" data-cy="refreshBtn">Refresh</button>
   </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th (click)="onSort('id')" class="sortable-header">
-          Id
-          <span class="sort-indicator">{{ getSortIndicator('id') | async }}</span>
-        </th>
-        <th (click)="onSort('name')" class="sortable-header">
-          Name
-          <span class="sort-indicator">{{ getSortIndicator('name') | async }}</span>
-        </th>
-        <th (click)="onSort('city')" class="sortable-header">
-          City
-          <span class="sort-indicator">{{ getSortIndicator('city') | async }}</span>
-        </th>
-        <th (click)="onSort('state')" class="sortable-header">
-          State
-          <span class="sort-indicator">{{ getSortIndicator('state') | async}}</span>
-        </th>
-        <th (click)="onSort('numStudents')" class="sortable-header">
-          Num Students
-          <span class="sort-indicator">{{ getSortIndicator('numStudents') | async}}</span>
-        </th>
-        <th (click)="onSort('tuitionAndFees')" class="sortable-header">
-          Tuition & Fees
-          <span class="sort-indicator">{{ getSortIndicator('tuitionAndFees') | async}}</span>
-        </th>
-        <th (click)="onSort('numMajors')" class="sortable-header">
-          Num Majors
-          <span class="sort-indicator">{{ getSortIndicator('numMajors') | async}}</span>
-        </th>
-        <th (click)="onSort('hasSports')" class="sortable-header">
-          Has Sports
-          <span class="sort-indicator">{{ getSortIndicator('hasSports') | async}}</span>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let college of (paginatedColleges$ | async); trackBy: trackById" (click)="onRowClick(college)">
-        <td data-label="Id">{{ college.id }}</td>
-        <td data-label="Name">{{ college.name }}</td>
-        <td data-label="City">{{ college.city }}</td>
-        <td data-label="State">{{ college.state }}</td>
-        <td data-label="Num Students">{{ college.numStudents }}</td>
-        <td data-label="Tuition & Fees">{{ college.tuitionAndFees | currency:'USD' }}</td>
-        <td data-label="Num Majors">{{ college.numMajors }}</td>
-        <td data-label="Has Sports">{{ college.hasSports ? 'Yes' : 'No' }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <ng-container *ngIf="(paginatedColleges$ | async) as paginatedColleges">
+    <table>
+      <thead>
+        <tr>
+          <th (click)="onSort('id')" class="sortable-header">
+            Id
+            <span class="sort-indicator">{{ getSortIndicator('id') | async }}</span>
+          </th>
+          <th (click)="onSort('name')" class="sortable-header">
+            Name
+            <span class="sort-indicator">{{ getSortIndicator('name') | async }}</span>
+          </th>
+          <th (click)="onSort('city')" class="sortable-header">
+            City
+            <span class="sort-indicator">{{ getSortIndicator('city') | async }}</span>
+          </th>
+          <th (click)="onSort('state')" class="sortable-header">
+            State
+            <span class="sort-indicator">{{ getSortIndicator('state') | async}}</span>
+          </th>
+          <th (click)="onSort('numStudents')" class="sortable-header">
+            Num Students
+            <span class="sort-indicator">{{ getSortIndicator('numStudents') | async}}</span>
+          </th>
+          <th (click)="onSort('tuitionAndFees')" class="sortable-header">
+            Tuition & Fees
+            <span class="sort-indicator">{{ getSortIndicator('tuitionAndFees') | async}}</span>
+          </th>
+          <th (click)="onSort('numMajors')" class="sortable-header">
+            Num Majors
+            <span class="sort-indicator">{{ getSortIndicator('numMajors') | async}}</span>
+          </th>
+          <th (click)="onSort('hasSports')" class="sortable-header">
+            Has Sports
+            <span class="sort-indicator">{{ getSortIndicator('hasSports') | async}}</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let college of paginatedColleges; trackBy: trackById" (click)="onRowClick(college)">
+          <td data-label="Id">{{ college.id }}</td>
+          <td data-label="Name">{{ college.name }}</td>
+          <td data-label="City">{{ college.city }}</td>
+          <td data-label="State">{{ college.state }}</td>
+          <td data-label="Num Students">{{ college.numStudents }}</td>
+          <td data-label="Tuition & Fees">{{ college.tuitionAndFees | currency:'USD' }}</td>
+          <td data-label="Num Majors">{{ college.numMajors }}</td>
+          <td data-label="Has Sports">{{ college.hasSports ? 'Yes' : 'No' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div
+      *ngIf="filter && paginatedColleges?.length === 0"
+      class="alert alert-danger" role="alert">
+        No college exists with that name.
+    </div>
+  </ng-container>
 
   <div class="pagination mt-2" *ngIf="currentPage$ | async as currentPage">
     <ul class="pagination" *ngIf="totalPages$ | async as totalPages">

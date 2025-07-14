@@ -8,11 +8,13 @@ import * as CollegeListActions from './college-list.actions';
 import * as CollegeListSelectors from './college-list.selectors';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { TableSkeletonComponent } from './components/table-skeleton.component';
+import { CollegeDetailsSkeletonComponent } from './components/college-details-skeleton.component';
 
 @Component({
   selector: 'app-college-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TableSkeletonComponent, CollegeDetailsSkeletonComponent],
   templateUrl: './college-list.component.html',
   styleUrl: './college-list.component.scss'
 })

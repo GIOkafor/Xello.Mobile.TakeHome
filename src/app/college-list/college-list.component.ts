@@ -38,7 +38,7 @@ export class CollegeListComponent {
 
   filter = '';
 
-  private pollingSub: Subscription = new Subscription();
+  // private pollingSub: Subscription = new Subscription();
   private destroy$ = new Subject<void>();
 
   constructor(private store: Store, private router: Router) {}
@@ -52,9 +52,9 @@ export class CollegeListComponent {
   }
 
   ngOnDestroy() {
-    if (this.pollingSub) {
-      this.pollingSub.unsubscribe();
-    }
+    // if (this.pollingSub) {
+    //   this.pollingSub.unsubscribe();
+    // }
     this.destroy$.next();
     this.destroy$.complete();
   }

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription, Subject, combineLatest, map, first } from 'rxjs';
+import { Observable, Subject, combineLatest, map, first } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { College } from './college-list.model';
 import * as CollegeListActions from './college-list.actions';
@@ -14,6 +14,7 @@ import { CollegeDetailsSkeletonComponent } from './components/college-details-sk
 @Component({
   selector: 'app-college-list',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, FormsModule, TableSkeletonComponent, CollegeDetailsSkeletonComponent],
   templateUrl: './college-list.component.html',
   styleUrl: './college-list.component.scss'

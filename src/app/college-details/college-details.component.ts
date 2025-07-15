@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { College } from '../college-list/college-list.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +10,7 @@ import * as CollegeListActions from '../college-list/college-list.actions';
 @Component({
   selector: 'app-college-details',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
   templateUrl: './college-details.component.html',
   styleUrl: './college-details.component.scss'

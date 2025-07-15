@@ -5,62 +5,79 @@
   </div>
 
   <!-- Table Skeleton -->
-  <app-table-skeleton></app-table-skeleton>
+  <app-table-skeleton role="status" 
+    aria-live="polite"
+    aria-label="Loading college list"></app-table-skeleton>
 </div>
 
 <div *ngIf="!(listLoading$ | async) && !(navigating$ | async)">
   <div class="searchInputs d-flex flex-wrap">
+    <label for="college-filter" class="visually-hidden">Filter colleges by school name</label>
     <input
       class="form-control college-filter mb-2 mb-sm-0 me-sm-2"
       type="text"
       placeholder="Filter by school name..."
       [(ngModel)]="filter"
       (ngModelChange) ="onFilterChange($event)"
+      [attr.aria-describedby]="filter && (paginatedColleges$|async)?.length === 0 ? 'no-results-message' : null"
+      aria-label="Filter colleges by school name"
     />
   
     <button type="button" class="btn btn-primary" (click)="refreshCollegeList()" aria-label="Refresh college list" data-cy="refreshBtn">Refresh</button>
   </div>
 
   <ng-container *ngIf="(paginatedColleges$ | async) as paginatedColleges">
-    <table>
+    <table role="table" aria-label="Colleges list with sortable columns">
       <thead>
         <tr>
-          <th (click)="onSort('id')" class="sortable-header">
+          <th (click)="onSort('id')" class="sortable-header" tabindex="0" role="columnheader" [attr.aria-sort]="getSortAriaLabel('id') | async" (keydown.enter)="onSort('id')" (keydown.space)="onSort('id'); $event.preventDefault()">
             Id
             <span class="sort-indicator">{{ getSortIndicator('id') | async }}</span>
           </th>
-          <th (click)="onSort('name')" class="sortable-header">
+          <th (click)="onSort('name')" class="sortable-header" tabindex="0" role="columnheader" [attr.aria-sort]="getSortAriaLabel('name') | async" (keydown.enter)="onSort('name')" (keydown.space)="onSort('name'); $event.preventDefault()">
             Name
             <span class="sort-indicator">{{ getSortIndicator('name') | async }}</span>
           </th>
-          <th (click)="onSort('city')" class="sortable-header">
+          <th (click)="onSort('city')" class="sortable-header" tabindex="0" role="columnheader" [attr.aria-sort]="getSortAriaLabel('city') | async" (keydown.enter)="onSort('city')" (keydown.space)="onSort('city'); $event.preventDefault()">
             City
             <span class="sort-indicator">{{ getSortIndicator('city') | async }}</span>
           </th>
-          <th (click)="onSort('state')" class="sortable-header">
+          <th (click)="onSort('state')" class="sortable-header" tabindex="0" role="columnheader" [attr.aria-sort]="getSortAriaLabel('state') | async" (keydown.enter)="onSort('state')" (keydown.space)="onSort('state'); $event.preventDefault()">
             State
             <span class="sort-indicator">{{ getSortIndicator('state') | async}}</span>
           </th>
-          <th (click)="onSort('numStudents')" class="sortable-header">
+          <th (click)="onSort('numStudents')" class="sortable-header" tabindex="0" role="columnheader" [attr.aria-sort]="getSortAriaLabel('numStudents') | async" (keydown.enter)="onSort('numStudents')" (keydown.space)="onSort('numStudents'); $event.preventDefault()">
             Num Students
             <span class="sort-indicator">{{ getSortIndicator('numStudents') | async}}</span>
           </th>
-          <th (click)="onSort('tuitionAndFees')" class="sortable-header">
+          <th (click)="onSort('tuitionAndFees')" class="sortable-header" tabindex="0" role="columnheader" [attr.aria-sort]="getSortAriaLabel('tuitionAndFees') | async" (keydown.enter)="onSort('tuitionAndFees')" (keydown.space)="onSort('tuitionAndFees'); $event.preventDefault()">
             Tuition & Fees
             <span class="sort-indicator">{{ getSortIndicator('tuitionAndFees') | async}}</span>
           </th>
-          <th (click)="onSort('numMajors')" class="sortable-header">
+          <th (click)="onSort('numMajors')" class="sortable-header" tabindex="0" role="columnheader" [attr.aria-sort]="getSortAriaLabel('numMajors') | async" (keydown.enter)="onSort('numMajors')" (keydown.space)="onSort('numMajors'); $event.preventDefault()">
             Num Majors
             <span class="sort-indicator">{{ getSortIndicator('numMajors') | async}}</span>
           </th>
-          <th (click)="onSort('hasSports')" class="sortable-header">
+          <th (click)="onSort('hasSports')" class="sortable-header" tabindex="0" role="columnheader" [attr.aria-sort]="getSortAriaLabel('hasSports') | async" (keydown.enter)="onSort('hasSports')" (keydown.space)="onSort('hasSports'); $event.preventDefault()">
             Has Sports
             <span class="sort-indicator">{{ getSortIndicator('hasSports') | async}}</span>
           </th>
         </tr>
       </thead>
+      <caption class="visually-hidden">
+        Table showing college information including name, location, student count, tuition, and other details. 
+        Click column headers to sort.
+      </caption>
+
       <tbody>
-        <tr *ngFor="let college of paginatedColleges; trackBy: trackById" (click)="onRowClick(college)">
+        <tr *ngFor="let college of paginatedColleges; trackBy: trackById"
+          (click)="onRowClick(college)"
+          (keydown.enter)="onRowClick(college)"
+          (keydown.space)="onRowClick(college); $event.preventDefault()"
+          tabindex="0"
+          role="button"
+          [attr.aria-label]="'View details for ' + college.name">
+
           <td data-label="Id">{{ college.id }}</td>
           <td data-label="Name">{{ college.name }}</td>
           <td data-label="City">{{ college.city }}</td>
@@ -75,24 +92,27 @@
 
     <div
       *ngIf="filter && paginatedColleges?.length === 0"
-      class="alert alert-danger" role="alert">
+      id="no-results-message"
+      class="alert alert-danger"
+      role="alert"
+      aria-live="polite">
         No college exists with that name.
     </div>
   </ng-container>
 
-  <div class="pagination mt-2" *ngIf="currentPage$ | async as currentPage">
+  <nav aria-label="Colleges list pagination" class="pagination mt-2" *ngIf="currentPage$ | async as currentPage">
     <ul class="pagination" *ngIf="totalPages$ | async as totalPages">
       
-      <li class="page-item" (click)="currentPage !== 1 && onPageChange(1)" [class.disabled]="currentPage === 1">
-        <a class="page-link cursor-pointer">
-          <i class="bi bi-chevron-bar-left"></i>
-        </a>
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <button class="page-link cursor-pointer" (click)="onPageChange(1)" [disabled]="currentPage === 1" [attr.aria-label]="'Go to first page' + (currentPage === 1 ? ' (current)' : '')">
+          <i class="bi bi-chevron-bar-left" aria-hidden="true"></i>
+        </button>
       </li>
   
-      <li class="page-item" (click)="currentPage !== 1 && onPageChange(currentPage - 1)" [class.disabled]="currentPage === 1">
-        <a class="page-link cursor-pointer">
-          <i class="bi bi-chevron-left"></i>
-        </a>
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <button class="page-link cursor-pointer" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" [attr.aria-label]="'Go to previous page' + (currentPage === 1 ? ' (current)' : '')">
+          <i class="bi bi-chevron-left" aria-hidden="true"></i>
+        </button>
       </li>
   
       <li class="page-item">
@@ -100,21 +120,24 @@
       </li>
   
       <li class="page-item">
-        <a class="page-link cursor-pointer" (click)="currentPage !== totalPages && onPageChange(currentPage + 1)" [class.disabled]="currentPage === totalPages">
-          <i class="bi bi-chevron-right"></i>
-        </a>
+        <button class="page-link cursor-pointer" (click)="onPageChange(currentPage + 1)" [class.disabled]="currentPage === totalPages" [attr.aria-label]="'Go to next page' + (currentPage === totalPages ? ' (current)' : '')">
+          <i class="bi bi-chevron-right" aria-hidden="true"></i>
+        </button>
       </li>
   
       <li class="page-item">
-        <a class="page-link cursor-pointer" (click)="currentPage !== totalPages && onPageChange(totalPages)" [class.disabled]="currentPage === totalPages">
-          <i class="bi bi-chevron-bar-right"></i>
-        </a>
+        <button class="page-link cursor-pointer" (click)="onPageChange(totalPages)" [class.disabled]="currentPage === totalPages" [attr.aria-label]="'Go to last page' + (currentPage === totalPages ? ' (current)' : '')">
+          <i class="bi bi-chevron-bar-right" aria-hidden="true"></i>
+        </button>
       </li>
     </ul>
-  </div>
+  </nav>
 </div>
 
 <!-- College Details Skeleton (shows while navigating) -->
-<app-college-details-skeleton *ngIf="navigating$ | async"></app-college-details-skeleton>
+<app-college-details-skeleton *ngIf="navigating$ | async"
+  role="status" 
+  aria-live="polite"
+  aria-label="Loading college details"></app-college-details-skeleton>
 
 <div *ngIf="error$ | async as error" class="error">Error: {{ error }}</div>

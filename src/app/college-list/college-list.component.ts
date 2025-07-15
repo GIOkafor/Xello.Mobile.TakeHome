@@ -120,4 +120,15 @@ export class CollegeListComponent {
       })
     );
   }
+
+  getSortAriaLabel(column: string): Observable<string> {
+    return combineLatest([this.sortBy$, this.sortDirection$]).pipe(
+      map(([sortBy, sortDirection]) => {
+        if (sortBy === column) {
+          return sortDirection === 'asc' ? 'ascending' : 'descending';
+        }
+        return 'none';
+      })
+    );
+  }
 }

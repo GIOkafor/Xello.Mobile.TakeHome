@@ -14,16 +14,17 @@
     font-weight: 700;
   }
 
-  ul {
+  dl {
     list-style: none;
     padding: 0;
 
-    li {
+    div {
       margin-bottom: 0.75rem;
       font-size: 1.1rem;
 
-      strong {
+      dt {
         color: #9333ea;
+        margin-right: 5px;
       }
     }
   }

@@ -2,14 +2,14 @@
     "version": 2,
     "builds": [
       {
-        "src": "dist/xello-senior-web-dev-takehome-web/index.html",
+        "src": "dist/xello-senior-web-dev-takehome-web/browser/index.html",
         "use": "@vercel/static"
       }
     ],
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "/dist/xello-senior-web-dev-takehome-web/index.html"
+        "dest": "/dist/xello-senior-web-dev-takehome-web/browser/index.html"
       }
     ]
 }

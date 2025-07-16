@@ -2,9 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CollegeListComponent } from './college-list.component';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { Router } from '@angular/router';
-import * as CollegeListActions from './college-list.actions';
-import * as CollegeListSelectors from './college-list.selectors';
-import { College } from './college-list.model';
+import * as CollegeListActions from '../../college-list.actions';
+import * as CollegeListSelectors from '../../college-list.selectors';
+import { College } from '../../college-list.model';
 
 describe('CollegeListComponent', () => {
   let component: CollegeListComponent;

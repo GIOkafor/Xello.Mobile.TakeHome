@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { Observable, of, throwError, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { CollegeListEffects } from './college-list.effects';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import * as CollegeListActions from './college-list.actions';

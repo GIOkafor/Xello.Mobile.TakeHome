@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, combineLatest, map, first } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { College } from './college-list.model';
-import * as CollegeListActions from './college-list.actions';
-import * as CollegeListSelectors from './college-list.selectors';
+import { College } from '../../college-list.model';
+import * as CollegeListActions from '../../college-list.actions';
+import * as CollegeListSelectors from '../../college-list.selectors';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { TableSkeletonComponent } from './components/table-skeleton.component';
-import { CollegeDetailsSkeletonComponent } from './components/college-details-skeleton.component';
+import { TableSkeletonComponent } from '../table-skeleton/table-skeleton.component';
+import { CollegeDetailsSkeletonComponent } from '../college-details-skeleton/college-details-skeleton.component';
 
 @Component({
   selector: 'app-college-list',

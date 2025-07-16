@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { CollegeListComponent } from './college-list/college-list.component';
+import { CollegeListComponent } from './college-list/components/college-list/college-list.component';
 import { collegeListResolver } from './college-list/college-list.resolver';
 
 export const routes: Routes = [

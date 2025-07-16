@@ -9,4 +9,5 @@ export const routes: Routes = [
     loadComponent: () => import('./college-details/college-details.component').then(m => m.CollegeDetailsComponent),
     resolve: { collegesLoaded: collegeListResolver } 
   },
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

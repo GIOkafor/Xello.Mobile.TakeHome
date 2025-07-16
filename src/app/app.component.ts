@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,4 +11,11 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'xello-senior-web-dev-takehome-web';
+
+  constructor(private router: Router){}
+
+  get pageTitle(): string {
+    const url = this.router.url;
+    return url.includes('/college') ? 'College Details' : 'College List';
+  }
 }

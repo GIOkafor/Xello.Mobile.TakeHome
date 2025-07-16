@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Meta, Title } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, combineLatest, map, first } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -42,9 +43,19 @@ export class CollegeListComponent {
   // private pollingSub: Subscription = new Subscription();
   private destroy$ = new Subject<void>();
 
-  constructor(private store: Store, private router: Router) {}
+  constructor(
+    private store: Store,
+    private router: Router,
+    private meta: Meta,
+    private title: Title
+  ) {}
 
   ngOnInit() {
+    this.title.setTitle('Xello - Colleges List');
+    this.meta.updateTag({ 
+      name: 'description', 
+      content: 'List of all the colleges available on the Xello app, including name, city, state, number of students, tuition & fees, number of majors, and sports. Click one for more details.' 
+    });
     // Polling every 30 seconds experiment to see if it's better with the button
     // this.pollingSub = interval(30000).subscribe(() => {
     //   this.store.dispatch(CollegeListActions.loadColleges());

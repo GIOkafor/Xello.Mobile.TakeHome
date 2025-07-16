@@ -78,14 +78,14 @@
           role="button"
           [attr.aria-label]="'View details for ' + college.name">
 
-          <td data-label="Id">{{ college.id }}</td>
-          <td data-label="Name">{{ college.name }}</td>
-          <td data-label="City">{{ college.city }}</td>
-          <td data-label="State">{{ college.state }}</td>
-          <td data-label="Num Students">{{ college.numStudents }}</td>
-          <td data-label="Tuition & Fees">{{ college.tuitionAndFees | currency:'USD' }}</td>
-          <td data-label="Num Majors">{{ college.numMajors }}</td>
-          <td data-label="Has Sports">{{ college.hasSports ? 'Yes' : 'No' }}</td>
+          <td data-label="Id" [attr.aria-label]="'College ID: ' + (college.id)">{{ college.id }}</td>
+          <td data-label="Name" [attr.aria-label]="'College Name: ' + (college.name)">{{ college.name }}</td>
+          <td data-label="City" [attr.aria-label]="'College City: ' + (college.city)">{{ college.city }}</td>
+          <td data-label="State" [attr.aria-label]="'College State: ' + (college.state)">{{ college.state }}</td>
+          <td data-label="Num Students" [attr.aria-label]="'Number of students in college: ' + (college.numStudents)">{{ college.numStudents }}</td>
+          <td data-label="Tuition & Fees" [attr.aria-label]="'Tuition: ' + (college.tuitionAndFees | currency:'USD')">{{ college.tuitionAndFees | currency:'USD' }}</td>
+          <td data-label="Num Majors" [attr.aria-label]="'Number of college majors: ' + (college.numMajors)">{{ college.numMajors }}</td>
+          <td data-label="Has Sports" [attr.aria-label]="'Sports: ' + (college.hasSports ? 'Yes' : 'No')">{{ college.hasSports ? 'Yes' : 'No' }}</td>
         </tr>
       </tbody>
     </table>
